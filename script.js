@@ -1,8 +1,8 @@
 /*
-    Project 01_06_01
+    Project 01_06_02
 
     Author: Jamin Pottle
-    Date:   8.16.18
+    Date:   8.20.18
 
     Filename: script.js
 */
@@ -62,9 +62,49 @@ function createEventListeners() {
     }
 }
 
+
+/* The code below was added for the 01_06_02 project but you need IE8 to be able to test it so the code is correct but this is a note to show that the code was added */
+
+
+// remove fallback placeholder text
+function zeroPlaceholder(){
+    var addressBox = document.getElementById("addrinput");
+    addressBox.style.color = "black";
+    if (addressBox.value === addressBox.placeholder){
+        addressBox.value = "";
+    }
+}
+
+// restore placeholder text if box contains no user entry
+function checkPlaceholder() {
+    var addressBox = document.getElementById("addrinput");
+    if (addressBox.value === "") {
+        addressBox.style.color = "rgb(178,184,183)";
+        addressBox.value = addressBox.placeholder;
+    }
+}
+
+// add placeholder text for browser that dont support placeholder attribute
+function generatePlaceholder() {
+    
+    if (!Modernizer.input.placeholder) {
+        var addressBox = document.getElementById("addrinput");
+        addressBox.value = address.placeholder;
+        addressBox.style.color = "rgb(178,184,183)";
+        if(addressBox.addEventListener) {
+            addressBox.addEventListener("focus", zeroPlaceholder, false);
+            addressBox.addEventListener("blur", checkPlaceholder, false);
+        } else if (addressBox.attachEvent) {
+            addressBox.attachEvent("onfocus", zeroPlaceholder);
+            addressBox.attachEvent("onblur", checkPlaceholder);
+        }
+    }
+}
+
 // function to set up the page
 function setUpPage(){
     createEventListeners();
+    generatePlaceholder();
 }
 
 // page load event handlers
